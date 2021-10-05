@@ -28,6 +28,11 @@ public class Programa {
         // Comitando a transação
         em.getTransaction().commit();
 
+        // Consultando um registro
+        Pessoa pessoa = new Pessoa();
+        pessoa = em.find(Pessoa.class,2);
+        System.out.println("Pessoa encontrada: " + pessoa);
+
         // Fechando as conexões
         em.close();
         emf.close();
