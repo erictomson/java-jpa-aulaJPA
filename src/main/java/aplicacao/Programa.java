@@ -10,43 +10,46 @@ import javax.xml.stream.events.EntityDeclaration;
 public class Programa {
 
     public static void main(String[] args) {
-        Pessoa p1 = new Pessoa(null,"Bruno","bruno@deloitte.com");
-        Pessoa p2 = new Pessoa(null, "Patricia", "patricia@deloitte.com");
-        Pessoa p3 = new Pessoa(null, "Eric", "eric@deloitte.com");
 
-        // Definindo a nova Entidade
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("aulaJPA");
-        // Gerenciando a Entidade
-        EntityManager em = emf.createEntityManager();
+            Pessoa p1 = new Pessoa(null, "Bruno", "bruno@deloitte.com");
+            Pessoa p2 = new Pessoa(null, "Patricia", "patricia@deloitte.com");
+            Pessoa p3 = new Pessoa(null, "Eric", "eric@deloitte.com");
 
-        // Iniciando a transação
-        em.getTransaction().begin();
-        // Inserindo dados do BD
-        // Comentando para não duplicar registros na tabela
-//        em.persist(p1);
-//        em.persist(p2);
-//        em.persist(p3);
+            // Definindo a nova Entidade
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("aulaJPA");
+            // Gerenciando a Entidade
+            EntityManager em = emf.createEntityManager();
 
-        // Consultando um registro
-        Pessoa pessoa = new Pessoa();
-        pessoa = em.find(Pessoa.class,2);
-        System.out.println("Pessoa encontrada: " + pessoa);
+        try {
+            // Iniciando a transação
+            em.getTransaction().begin();
+            // Inserindo dados do BD
+            // Comentando para não duplicar registros na tabela
+            //        em.persist(p1);
+            //        em.persist(p2);
+            //        em.persist(p3);
 
-        // Atualizando um registro
-        pessoa.setEmail("pmiyazaki@deloitte.com");
-        em.persist(pessoa);
-        System.out.println("Pessoa atualizada: " + pessoa);
+            // Consultando um registro
+            Pessoa pessoa = new Pessoa();
+            pessoa = em.find(Pessoa.class, 2);
+            System.out.println("Pessoa encontrada: " + pessoa);
 
-        // Excluindo um registro
-        em.remove(pessoa);
-        System.out.println("Pessoa excluída: " + pessoa);
+            // Atualizando um registro
+            pessoa.setEmail("pmiyazaki@deloitte.com");
+            em.persist(pessoa);
+            System.out.println("Pessoa atualizada: " + pessoa);
 
-        // Comitando as transações
-        em.getTransaction().commit();
+            // Excluindo um registro
+            em.remove(pessoa);
+            System.out.println("Pessoa excluída: " + pessoa);
 
-        // Fechando as conexões
-        em.close();
-        emf.close();
+            // Comitando as transações
+            em.getTransaction().commit();
 
+        } finally {
+            // Fechando as conexões
+            em.close();
+            emf.close();
+        }
     }
 }
