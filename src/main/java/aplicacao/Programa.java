@@ -22,16 +22,27 @@ public class Programa {
         // Iniciando a transação
         em.getTransaction().begin();
         // Inserindo dados do BD
-        em.persist(p1);
-        em.persist(p2);
-        em.persist(p3);
-        // Comitando a transação
-        em.getTransaction().commit();
+        // Comentando para não duplicar registros na tabela
+//        em.persist(p1);
+//        em.persist(p2);
+//        em.persist(p3);
 
         // Consultando um registro
         Pessoa pessoa = new Pessoa();
         pessoa = em.find(Pessoa.class,2);
         System.out.println("Pessoa encontrada: " + pessoa);
+
+        // Atualizando um registro
+        pessoa.setEmail("pmiyazaki@deloitte.com");
+        em.persist(pessoa);
+        System.out.println("Pessoa atualizada: " + pessoa);
+
+        // Excluindo um registro
+        em.remove(pessoa);
+        System.out.println("Pessoa excluída: " + pessoa);
+
+        // Comitando as transações
+        em.getTransaction().commit();
 
         // Fechando as conexões
         em.close();
